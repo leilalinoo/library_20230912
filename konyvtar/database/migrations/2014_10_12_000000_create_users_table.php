@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,7 +21,22 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+
+
+        User::create([ 
+        'name' => 'vki', 
+        'email' => 'aaa@gmail.com', 
+        'password'=> 'aha']);
+
+        User::create([ 
+        'name' => 'amaha', 
+        'email' => 'derek@gmail.com', 
+        'password'=> '12345']);
+
+
     }
+
+
 
     /**
      * Reverse the migrations.
