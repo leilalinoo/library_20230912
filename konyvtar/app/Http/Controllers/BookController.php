@@ -19,25 +19,23 @@ class BookController extends Controller
     public function destroy($id){
         Book::find($id)->delete();
         //még nem llétezik
-        return redirect('/book/list');
+      //  return redirect('/book/list');
     }
 
     public function update(Request $request, $id){
         $book = Book::find($id);
         $book->author = $request->author;
         $book->title = $request->title;
-        $book->pieces = $request->pieces;
         $book->save();
-        return redirect('/book/list');
+      //  return redirect('/book/list');
     }
 
     public function store(Request $request){
         $book = new Book();
         $book->author = $request->author;
         $book->title = $request->title;
-        $book->pieces = $request->pieces;
         $book->save();
-        return redirect('/book/list');
+       // return redirect('/book/list');
     }
 
 
