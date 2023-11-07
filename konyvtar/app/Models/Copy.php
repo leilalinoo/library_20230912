@@ -15,4 +15,12 @@ class Copy extends Model
         'publication',
         'book_id',
     ];
+
+    public function book(){
+        return $this->belongsTo(Book::class, 'book_id', 'book_id');
+    }
+
+    public function lending(){
+        return $this->hasMany(Lending::class, 'copy_id', 'copy_id');
+    }
 }

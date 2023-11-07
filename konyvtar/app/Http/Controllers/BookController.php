@@ -55,6 +55,9 @@ class BookController extends Controller
         return view('book.list', ['books' => $books]);
     }
 
-
+    //with fgvek
+    public function bookCopy(){
+        return Book::with('copy') -> get();
+    }
 
 }
