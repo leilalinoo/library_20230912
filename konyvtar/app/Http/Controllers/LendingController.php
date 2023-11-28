@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Lending;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class LendingController extends Controller
 {
@@ -28,16 +29,16 @@ class LendingController extends Controller
         //  return redirect('/User/list');
     }
 
-    /*   public function update(Request $request, $id)
+      public function update(Request $request, $user_id, $copy_id, $start)
     {
         $lending = LendingController::show($user_id, $copy_id, $start);
-        $user_id, $copy_id, $start
-        $lending->user_id = $request->user_id;
-        $lending->copy_id = $request->copy_id;
-        $lending->start = $request->start;
+        //CSAK PATCH!
+        $lending->end = $request->end;
+        $lending->extension = $request->extension;
+        $lending->notice = $request->notice;
         $lending->save();
         //  return redirect('/User/list');
-    }*/
+    }
 
     public function store(Request $request)
     {
@@ -57,7 +58,25 @@ class LendingController extends Controller
         return $lendings;
     }
 
-    public function useMany($start){
-        
+    public function booksatuser()
+    {
+        $user = Auth::user();
+        $books = DB::table('lendings as l')
+        ->join('copies as c', 'l.copy_id', '=' , 'c.copy_id')
+        ->join('books as b', 'c.book_id', '=', 'b.book_id')
+        ->select('b.title', 'b.author')
+        ->where('l.user_id', '=', $user->id)
+        ->whereNull('l.end')
+        ->get();
+        return $books;
+    }
+
+    public function lengthen($copy_id, $start){
+        $user = Auth::user();
+        DB::table('lendings')
+        ->where('copy_id', $copy_id)
+        ->where('start', $start)
+        ->where('user_id', $user->id)
+        ->update(['extension' => 1]);
     }
 }

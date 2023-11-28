@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BookController extends Controller
 {
@@ -58,6 +59,17 @@ class BookController extends Controller
     //with fgvek
     public function bookCopy(){
         return Book::with('copy') -> get();
+    }
+
+    public function publicated($book_id)
+    {
+        //egy bizonyos könyv (azonosító a bemenet)-höz tartozó példányok (2000 felettiek) megjelenítése
+        return DB::table('copies as c')	//egy tábla lehet csak
+        ->select('copy_id', 'hardcovered', 'publication', 'status')		//itt nem szükséges
+        ->join('books as b' ,'c.book_id','=','b.book_id')
+        ->where('c.publication', '>', 2000)
+        ->where('b.book_id', $book_id)
+        ->get();
     }
 
 }

@@ -17,6 +17,8 @@ return new class extends Migration
             $table->foreignId('user_id')->references('id')->on('users');
             $table->foreignId('copy_id')->references('copy_id')->on('copies');
             $table->primary(['user_id', 'copy_id', 'start']);
+            $table->date('end')->nullable()->default(null);
+            $table->boolean('extension')->default(0);
             $table->timestamps();
         });
 

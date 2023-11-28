@@ -4,6 +4,7 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\CopyController;
 use App\Http\Controllers\LendingController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\UserController;
 use App\Models\Lending;
 use Illuminate\Support\Facades\Route;
@@ -51,4 +52,7 @@ Route::delete('/api/lendings/{user_id}/{copy_id}/{start}', [LendingController::c
 Route::get('/with/book_copy', [BookController::class, 'bookCopy']);
 Route::get('/with/lending_user', [LendingController::class, 'lendingUser']);
 Route::get('/with/copy_book_lending', [CopyController::class, 'copyBookLending']);
+Route::get('/with/user_l_r', [UserController::class, 'userLR']);
+
+Route::patch('/api/reservations/{user_id}/{book_id}/{start}', [ReservationController::class, 'update']);
 require __DIR__ . '/auth.php';
